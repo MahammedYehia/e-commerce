@@ -1,0 +1,149 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+
+@model IPagedList<e_commerce.Models.Product>
+
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+@section menu{}
+    
+<p style="margin-left:50%">
+  @Html.ActionLink("add new product", "Create",null, new {@class="btn btn-succuss" })
+    </p>
+<div style="margin-left:800px">
+    <input type="text" placeholder="search..." id="search"
+           name="search" class="search-query span3" />
+
+
+</div>
+<br /><br />
+
+
+    <table class="table display" id="MyDateTable" border="1">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Category.CategoryName)</a>
+            </th>
+            <th>
+                <a onclick='sortbytitle()' style="cursor:pointer">  @Html.DisplayNameFor(model => model.First().title)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().MyProperty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Image)
+            </th>
+            <th>
+                Total Product = [@Model.Count()]
+            </th>
+        </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MyProperty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.price)
+                    </td>
+                    <td>
+                        <img src="~/uploads/@Html.DisplayFor(modelItem => item.Image)"
+                             class="thumbnail" onmouseover="showcategory(@item.id)" style="width:90px;height:90px" alt="Alternate Text" />
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.id })
+
+                        @using (Html.BeginForm("Delete", "Product", new { id = item.id },
+
+              FormMethod.Post, new { onsubmit = "return confirm ('are you delete this')" }))
+                    {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Delete" id="sidebar" />
+                    }
+                    </td>
+                </tr>
+            }
+    </table>
+    <div class="pagination" style="margin-left:50%">
+        <ul>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </ul>
+
+    </div>
+<script src="~/Scripts/complete/jquery-1.10.2.js"></script>
+
+<script>
+    function sortbytitle() {
+        $.ajax({
+            type: "POST",
+            url: "/Product/sortbytitle",
+            type: "json",
+
+            success: function (data) {
+                $("#MyDateTable").html(data);
+                //$("#search").val("");
+
+            },
+
+        });
+
+    }
+
+    $(document).ready(function () {
+
+        $("#search").keyup(function(){
+            var value = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: "/Product/Search?search=" + value,
+                contentType: "html",
+              
+                success: function (data) {
+                    $("#MyDateTable").html(data);
+                    //$("#search").val("");
+
+                },
+               
+            });
+        })
+
+
+
+        var sortbytitle = function () {
+            alert("kkkkkk");
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Product/sortbytitle",
+            //    type: "json",
+
+            //    success: function (data) {
+            //        $("#MyDateTable").html(data);
+            //        //$("#search").val("");
+
+            //    },
+
+            //});
+
+        }
+
+    })
+   
+   
+
+</script>

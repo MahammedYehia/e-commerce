@@ -1,0 +1,126 @@
+﻿@model e_commerce.Models.Product
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menu{}
+
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="margin-left:140px">
+
+        <div class="form-horizontal">
+
+            <div class="alert alert-danger" id="error-div" style="display:none">
+                <span id="view-error">
+
+                </span>
+
+            </div>
+        </div>
+
+
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.Image)
+        <div class="form-group">
+            @Html.LabelFor(model => model.title, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.title)
+                @Html.ValidationMessageFor(model => model.title)
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.MyProperty, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MyProperty)
+                @Html.ValidationMessageFor(model => model.MyProperty)
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.price, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.price)
+                @Html.ValidationMessageFor(model => model.price)
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quentity, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quentity)
+                @Html.ValidationMessageFor(model => model.Quentity)
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input name="upload" type="file" id="Imageid" />
+                @Html.ValidationMessageFor(model => model.Image)
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Categoryid, "Categoryid", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Categoryid", String.Empty)
+                @Html.ValidationMessageFor(model => model.Categoryid)
+            </div>
+        </div>
+        <br />
+        <div class="form-group" style="margin-left:240px">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" id="save" />
+            </div>
+        </div>
+    </div>
+}
+
+<div style="margin-left:370px">
+    @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-default" })
+</div>
+
+@section scripts
+{
+    <script>
+
+        $(function () {
+            $("#save").click(function () {
+
+                if ($("#Imageid").val() != "") {
+                    //check if the image extention is valid
+                    var filename = document.getElementById("Imageid").value;
+                    var extention = filename.substr(filename.lastIndexOf('.') + 1);
+                    var validextention = ['bmp', 'gif', 'png', 'jpg', 'PNG'];
+                    if ($.inArray(extention, validextention) == -1) {
+                        $("#error-div").fadeIn();
+                        $("#view-error").append("please select Image by valid extention");
+                        return false;
+                    }
+
+                    //check if the image size is valid
+
+                    var filesize = document.getElementById("Imageid").files[0].size / 1024 / 1024;
+                    if (filesize > 2) {
+                        $("#error-div").fadeIn();
+                        $("#view-error").append("please select Image size >2");
+                        return false;
+                    }
+                }
+
+            });
+
+        });
+
+    </script>
+
+
+
+}

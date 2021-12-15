@@ -1,0 +1,161 @@
+﻿@model e_commerce.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+  }
+@section menu{}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="#">Home</a> <span class="divider">/</span></li>
+        <li><a href="#">@Model.Category.CategoryName</a> <span class="divider">/</span></li>
+        <li class="active">@Model.title</li>
+    </ul>
+    <div class="well well-small">
+        <div class="row-fluid">
+            <div class="span5">
+                <div id="myCarousel" class="carousel slide cntr">
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <a href="#"> <img src="~/uploads/@Model.Image" alt="" style="width:100%"></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="span7">
+                <h3>@Model.title [$@Model.price]</h3>
+                <hr class="soft" />
+
+                <form class="form-horizontal qtyFrm">
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.title):</span></label>
+                        <div class="controls">
+                            @Html.DisplayFor(model => model.title)
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.MyProperty):</span></label>
+                        <div class="controls">
+                    @Html.DisplayFor(model => model.MyProperty)
+                        </div>
+                     
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.price):</span></label>
+                        <div class="controls">
+                          $@Html.DisplayFor(model => model.price)
+                        </div>
+                    </div>
+
+                    @*<div class="control-group">
+                        <label class="control-label"><span>Quentity:</span></label>
+                        <div class="controls">
+                            <input type="number" class="span6" placeholder="Qty." id="quentity">
+                            
+                        </div>
+                    </div>*@
+
+                    @*<h4>100 items in stock</h4>*@
+
+                    <p style="margin-left:10px">
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+                        @Html.ActionLink("Back to List", "Index")
+                    </p>
+                        @*<button type="submit" class="shopBtn"><span class="icon-shopping-cart"></span> Add to cart</button>*@
+
+                    <button class="shopBtn">
+                        <span class="icon-shopping-cart"></span>
+
+                        @Html.ActionLink("Add to cart", "OrderedNow", "ShopingCart", new { id = Model.id }, null)
+                    </button>
+                </form>
+            </div>
+        </div>
+        <hr class="softn clr" />
+
+    </div>
+        </div>
+<br /><br /><br />
+@section scripts
+{
+    <script>
+
+        $(function () {
+            //$("#save").click(function () {
+              
+               
+
+            //});
+            if (quentity > 1) {
+
+                $("#quentity")= @Model.price +1;              
+             }
+        });
+
+
+    </script>
+}
+
+
+
+
+
+
+        @*<h2>Details</h2>
+
+            <div style="margin-left:170px">
+                <h4>Product</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Category.CategoryName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Category.CategoryName)
+                    </dd>
+                    <br />
+                    <dt>
+                        @Html.DisplayNameFor(model => model.title)
+                    </dt>
+
+
+                    <dd>
+                        @Html.DisplayFor(model => model.title)
+                    </dd>
+                    <br />
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MyProperty)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.MyProperty)
+                    </dd>
+                    <br />
+                    <dt>
+                        @Html.DisplayNameFor(model => model.price)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.price)
+                    </dd>
+                    <br />
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Image)
+                    </dt>
+
+                    <dd>
+                        <img src="~/uploads/@Html.DisplayFor(model => model.Image)"
+                             class="thumbnail" style="width:90px;height:90px" alt="Alternate Text" />
+                    </dd>
+                    <br />
+                </dl>
+            </div>
+            <p style="margin-left:280px">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>*@
+

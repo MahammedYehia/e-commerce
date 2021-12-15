@@ -1,0 +1,61 @@
+﻿
+
+@model IEnumerable<e_commerce.Models.Product>
+
+<table class="table display" id="MyDateTable" border="1">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().MyProperty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Image)
+        </th>
+        <th>
+            Total Product = [@Model.Count()]
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MyProperty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                <img src="~/uploads/@Html.DisplayFor(modelItem => item.Image)"
+                     class="thumbnail" onmouseover="showcategory(@item.id)" style="width:90px;height:90px" alt="Alternate Text" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id })
+
+                @using (Html.BeginForm("Delete", "Product", new { id = item.id },
+
+              FormMethod.Post, new { onsubmit = "return confirm ('are you delete this')" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Delete" id="sidebar" />
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+

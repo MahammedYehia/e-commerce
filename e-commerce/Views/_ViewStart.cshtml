@@ -1,0 +1,55 @@
+﻿
+
+@{
+    
+        Layout = "~/Views/Shared/_Layout.cshtml";
+   
+}
+
+@*@{
+    string CurrentName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"]);
+    dynamic Layout;
+    switch (CurrentName)
+    {
+        case "admin":
+            Layout = "~/Views/Shared/_AdminLayout.cshtml";
+            break;
+        default: 
+            //Admin layout
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+}*@
+
+
+   
+
+
+@*@if (Request.IsAuthenticated)
+{
+    if (User.IsInRole("admin"))
+    {
+        {
+            Layout = "~/Views/Shared/_AdminLayout.cshtml";
+        }
+    }
+    else
+    {
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+}
+    
+else
+{
+    
+{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+      
+
+
+}*@
+
+

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<e_commerce.Models.ProductViewModel>
+
+@section menu{
+   }
+@foreach (var gr in Model)
+{
+    <h3 style="margin-left:18%">@gr.title</h3>
+
+    <table class="table table-bordered tab-content table-condensed table-responsive table-hover
+           table-striped ">
+
+        <tr>
+
+            <th>username</th>
+            <th>quentity</th>
+            <th>price</th>
+        </tr>
+        
+            @foreach (var item in gr.Items)
+            {
+                <tr>
+                    <td>@item.Order.Username</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitPrice</td>
+                </tr>
+            }
+
+    </table>
+}
+<br /><br /><br />

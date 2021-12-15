@@ -1,0 +1,36 @@
+﻿@model e_commerce.Models.like
+
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+
+
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery-migrate-3.0.0.min.js"></script>
+@*@using (Html.BeginForm("supmitComment", "Home", FormMethod.Post, new { @class = "navbar-search pull-left" }))
+{
+    <input type="text" placeholder="Comment..." id="commentName" name="commentName" class="search-query span2">
+}*@
+
+
+
+@using (Ajax.BeginForm("supmitComment","Home", null, new AjaxOptions
+{
+    UpdateTargetId = "lbResult2",
+
+    InsertionMode = InsertionMode.Replace,
+
+    HttpMethod = "POST"
+
+},new { id="SampleForm"}))
+{
+
+    <input type="text" placeholder="Comment..." id="commentName" name="commentName" class="search-query span3" />
+ 
+     
+      <div id="lbResult2">
+
+    </div>
+
+}
+

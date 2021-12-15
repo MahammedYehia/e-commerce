@@ -1,0 +1,26 @@
+﻿@model IEnumerable<e_commerce.Models.like>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.post_txt)
+        </th>
+     
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.post_txt)
+        </td>
+     
+    </tr>
+}
+
+</table>

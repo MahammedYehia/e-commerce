@@ -1,0 +1,37 @@
+﻿@model IEnumerable<e_commerce.Models.like>
+
+<table class="table table-hover table-striped" style="width:100%">
+    @*<tr>
+        <th>
+            UserImage
+        </th>
+         <th>
+            @Html.DisplayNameFor(model => model.post_txt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.data)
+        </th>
+    </tr>*@
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <div style="width:47px;height:86px;">
+
+                <img src="~/uploads/@item.User.Image" alt="ecommerce">
+                @Html.DisplayFor(modelItem => item.User.UserName)
+
+            </div>
+       
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.post_txt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.data)
+        </td>
+       
+    </tr>
+}
+
+</table>

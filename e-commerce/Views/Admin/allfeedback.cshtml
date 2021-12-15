@@ -1,0 +1,31 @@
+﻿@model IEnumerable<e_commerce.Models.FeedBackModel>
+
+    @section menu{
+    }
+    @foreach (var gr in Model)
+    {
+        <h3 style="margin-left:18%">@gr.title</h3>
+
+        <table class="table tab-content table-condensed table-responsive table-hover
+           table-striped table-bordered">
+
+            <tr>
+
+                <th>UserName</th>
+                <th>post_txt</th>
+                <th>data</th>
+
+            </tr>
+
+            @foreach (var item in gr.Items)
+            {
+                <tr>
+                    <td>@item.User.UserName</td>
+                    <td>@item.post_txt</td>
+                    <td>@item.data</td>
+                </tr>
+            }
+
+        </table>
+    }
+<br /><br /><br />

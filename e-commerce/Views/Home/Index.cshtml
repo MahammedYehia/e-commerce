@@ -1,0 +1,191 @@
+﻿@model IEnumerable<e_commerce.Models.Product>
+
+        @*<div class="well np">
+            <div id="myCarousel" class="carousel slide homCar">
+                <div class="carousel-inner">
+                    <div class="item">
+                        <img style="width:100%" src="~/assets/img/bootstrap-templates.png" alt="bootstrap ecommerce templates">
+                        <div class="carousel-caption">
+                            <h4>Bootstrap shopping cart</h4>
+                            <p><span>Very clean simple to use</span></p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img style="width:100%" src="~/assets/img/bootstrappage_shop.png" alt="bootstrap ecommerce templates">
+                        <div class="carousel-caption">
+                            <h4>Bootstrap Ecommerce template</h4>
+                            <p><span>Highly Google seo friendly</span></p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img style="width:100%" src="~/assets/img/carousel1.png" alt="bootstrap ecommerce templates">
+                        <div class="carousel-caption">
+                            <h4>Twitter Bootstrap cart</h4>
+                            <p><span>Very easy to integrate and expand.</span></p>
+                        </div>
+                    </div>
+                    <div class="item active">
+                        <img style="width:100%" src="~/assets/img/carousel3.png" alt="bootstrap templates">
+                        <div class="carousel-caption">
+                            <h4>Bootstrap templates integration</h4>
+                            <p><span>Compitable to many more opensource cart</span></p>
+                        </div>
+                    </div>
+                </div>
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+            </div>
+        </div>*@
+
+
+
+
+        <div class="well well-small">
+        <h3>New Products </h3>
+        <hr class="soften" />
+        <div class="row-fluid">
+        <div id="newProductCar" class="carousel slide">
+        <div class="carousel-inner">
+        <div class="item active">
+            <ul class="thumbnails" id="sorttablegalary" style="cursor:move">
+
+                @foreach (var supitem in Model.Take(4))
+                {
+
+                    <li class="span3">
+                        <div class="thumbnail">
+                            @*<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>*@
+                            <a href="#" class="overlay"></a>
+                            @Html.ActionLink("VIEW Details", "Details", new { productid = supitem.id },
+                new { @class = "zoomTool" })
+
+
+                            <a href="#" class="tag"></a>
+                            <a href="@Url.Action("Details", "Home", new { productid = supitem.id })">
+                                <img src="~/uploads/@supitem.Image" alt="ecommerce">
+                            </a>
+                        </div>
+                    </li>
+                }
+
+
+
+            </ul>
+
+                        </div>
+                        <div class="item">
+                            <ul class="thumbnails" id="sorttablegalary" style="cursor:move">
+
+                                @foreach (var supitem in Model.Take(4))
+                                {
+
+                                    <li class="span3">
+                                        <div class="thumbnail">
+                                            <a href="#" class="overlay"></a>
+                                            @Html.ActionLink("VIEW Details", "Details", new { productid = supitem.id },
+                                             new { @class = "zoomTool" })
+                                            <a href="#" class="tag"></a>
+
+                                            <a href="@Url.Action("Details", "Home", new { productid = supitem.id })">
+                                                <img src="~/uploads/@supitem.Image" alt="">
+                                            </a>
+                                        </div>
+                                    </li>
+                                }
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+                    <a class="left carousel-control" href="#newProductCar" data-slide="prev">&lsaquo;</a>
+                    <a class="right carousel-control" href="#newProductCar" data-slide="next">&rsaquo;</a>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+    @*<h3>Three Column Product view </h3>
+                              <div class="well well-small">
+
+                                  <ul class=" thumbnails">
+
+                                  @foreach (var supitem in Model)
+                                  {
+                                      <li class="span2">
+                                          <div class="thumbnail">
+                                              <a href="product_details.html" class="overlay"></a>
+                                              <a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+                                              <a href="@Url.Action("Details", "Home", new { productid = supitem.id })"><img src="~/uploads/@supitem.Image" alt=""></a>
+                                              <div class="caption cntr">
+                                                  <p>Manicure & Pedicure</p>
+                                                  <p><strong> $22.00</strong></p>
+                                                  <h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+                                                  <div class="actionList">
+                                                      <a class="pull-left" href="#">Add to Wish List </a>
+                                                      <a class="pull-left" href="#"> Add to Compare </a>
+                                                  </div>
+                                                  <br class="clr">
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                  }
+                                  </ul>
+                              </div>*@
+
+
+
+             <div class="well well-small">
+            <h3>Our Products </h3>
+
+            @*<div class="row-fluid">*@
+                 <ul class="thumbnails" id="sorttablegalary" style="cursor:move">
+
+                     @foreach (var supitem in Model)
+                     {
+                         <li class="span3">
+                             <div class="thumbnail">
+
+                                 <a href="#" class="overlay"></a>
+                                 @Html.ActionLink("VIEW Details", "Details", new { productid = supitem.id },
+                    new { @class = "zoomTool" })
+
+                                 <a href="@Url.Action("Details", "Home", new { productid = supitem.id })">
+                                     <img src="~/uploads/@supitem.Image" alt="">
+                                 </a>
+                                 <div class="caption cntr">
+                                     <p> @Html.DisplayFor(nn => supitem.title) & @Html.DisplayFor(nn => supitem.MyProperty)  </p>
+
+
+                                     @*<a href="@Url.Action("addfavourite", "Home")" id="fav" title="add to cart">
+                                <span class="icon-heart-empty"></span>
+                            </a>*@
+                                     <div class="actionList">
+                                         <a class="pull-left" href="#">Add to Wish List </a>
+
+                                         <a class="pull-left" href="#">Add to Wish  </a>
+                                     </div>
+                                     <br class="clr">
+                                 </div>
+                             </div>
+
+                         </li>
+
+
+                     }
+                 </ul>
+                  </div>
+<script src="~/Scripts/complete/jquery-1.10.2.js"></script>
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/theme.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+      <script>
+
+          $("#sorttablegalary").sortable();
+
+      </script>      

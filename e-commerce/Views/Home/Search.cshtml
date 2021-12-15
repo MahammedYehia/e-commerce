@@ -1,0 +1,50 @@
+﻿@model IEnumerable<e_commerce.Models.Product>
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="well well-small">
+    <h3>Searching .... </h3>
+
+
+    <div class="row-fluid">
+        <ul class="thumbnails">
+
+            @foreach (var supitem in Model)
+            {
+                  <li>
+                  <div class="thumbnail">
+                   <a href="product_details.html" class="overlay"></a>
+
+                   @Html.ActionLink("QUICK VIEW", "Details", new { productid = supitem.id },
+                                new { @class = "zoomTool" })
+
+
+                    <a href="product_details.html"><img src="~/uploads/@supitem.Image" alt=""></a>
+                    <div class="caption cntr">
+                        <p> @Html.DisplayFor(nn => supitem.title) &
+                         @Html.DisplayFor(nn => supitem.MyProperty) 
+                         </p>
+                        <p><strong> $@Html.DisplayFor(nn => supitem.price)</strong></p>
+                        <h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+                        <div class="actionList">
+                            <a class="pull-left" href="#">Add to Wish List </a>
+                            <a class="pull-left" href="#"> Add to Compare </a>
+                        </div>
+                        <br class="clr">
+                    </div>
+                </div>
+
+            </li>
+
+
+            }
+
+
+        </ul>
+    </div>
+
+</div>
+

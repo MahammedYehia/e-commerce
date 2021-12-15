@@ -1,0 +1,497 @@
+﻿@model e_commerce.Models.Product
+@{
+    ViewBag.Title = "Details";      
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assets/prettyPhoto.css" rel="stylesheet" />
+
+
+
+@if (Model.Quentity>0) { 
+
+    <div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="#">Home</a> <span class="divider">/</span></li>
+        <li><a href="#">@Model.Category.CategoryName</a><span class="divider">/</span></li>
+        <li class="active">@Model.title</li>
+    </ul>
+        <input type="hidden" value="@Model.id" id="prodid"/>
+        <input type="hidden" value="@Session["Userid"]" id="userid" />
+
+              
+         <div class="well well-small">
+        <div class="row-fluid">
+            <div class="span5 ">
+
+                    
+                <div id="myCarousel" class="carousel slide cntr thumbnail">
+                    <div class="carousel-inner">
+                        <div class="preview">
+                            <a href="~/uploads/@Model.Image">
+                                <img src="~/uploads/@Model.Image" title="@Model.title" alt="" style="width:100%">
+                            </a>
+                            <div>
+                                @*<a class="preview" href="~/uploads/@Model.Image"
+                                   title="<h3> Name : @Model.title <br />Price: @Model.price </h3>">
+                                    <span class="icon-edit"></span>
+                                </a>*@
+
+
+                            </div>
+
+
+                            <div class="caption cntr">
+
+                                <div class="Fav">
+                                    @if (ViewBag.like != 0)
+                                    {
+                                        <a  title="delete fav">
+                                            <span class="icon-heart" id="dislike"></span>
+                                        </a>
+
+                                    }
+                                    else
+                                    {
+                                        <a  title="add to fav">
+                                            <span class="icon-heart-empty" id="hyperaddtofav"></span>
+                                        </a>
+                                    }
+                                </div>
+                                @{Html.RenderAction("numberoflike", "Home");}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="span7">
+                <h3>@Model.title [$@Model.price]</h3>
+                <hr class="soft" />
+
+                <form class="form-horizontal qtyFrm">
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.title):</span></label>
+                        <div class="controls">
+                            @Html.DisplayFor(model => model.title)
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.MyProperty):</span></label>
+                        <div class="controls">
+                            @Html.DisplayFor(model => model.MyProperty)
+                        </div>
+
+
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.price):</span></label>
+                        <div class="controls">
+                            $@Html.DisplayFor(model => model.price)
+                        </div>
+                    </div>
+
+
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.Quentity):</span></label>
+                        <div class="controls">
+                            @Html.DisplayFor(model => model.Quentity)
+                        </div>
+                    </div>
+
+
+                    @Html.ActionLink("Back to List", "Index")
+                    <button class="shopBtn">
+                        <span class="icon-shopping-cart"></span>
+                        @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = Model.id }, null)
+                    </button>
+                </form>
+
+            </div>
+        </div>
+        <div style="margin-left:20px;margin-top:20px">
+            
+        <input type="text" placeholder="add Comment..." id="commentname"
+            name="commentName" class="search-query span3" />
+
+            <input type="button" value="add" id="addpost" class="btn btn-default" style="border-radius:30px"/>
+
+        
+        </div>
+
+        <br />
+
+
+            
+
+        <div id="load" style="display:none">
+            <img src="~/assets/loadingDNT.gif" />
+        </div>
+            
+            <table class="table" id="ggg" style="width:100%">
+                <tr>
+                    <th>
+                        user
+                    </th>
+                       
+                    <th>
+                        post
+                    </th>
+                    <th>
+                        delete
+                    </th>
+
+                </tr>
+            </table>
+
+
+
+            <hr class="softn clr" />
+
+
+
+             <ul id="productDetail" class="nav nav-tabs">
+                 <li class="active"><a href="#home" data-toggle="tab">Related Products</a></li>
+                <li class=""><a href="#profile" data-toggle="tab">most Products  </a></li>
+               @*  <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Acceseries <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="#cat1" data-toggle="tab">Category one</a></li>
+            <li><a href="#cat2" data-toggle="tab">Category two</a></li>
+        </ul>
+    </li>*@
+             </ul>
+             
+             
+             <div id="myTabContent" class="tab-content tabWrapper">
+        @*//////////////*@
+                 <div class="tab-pane fade active in" id="home">
+                     @{Html.RenderAction("Related_Product", "Home");}
+
+
+                 </div>
+                 <div class="tab-pane fade" id="profile">
+                     @{Html.RenderAction("most_Product", "Home");}
+
+
+                     <hr class="soften" />
+                 </div>
+                 <div class="tab-pane fade" id="cat2">
+
+                     <div class="row-fluid">
+                         <div class="span2">
+                             <img src="assets/img/d.jpg" alt="">
+                         </div>
+                         <div class="span6">
+                             <h5>Product Name </h5>
+                             <p>
+                                 Nowadays the lingerie industry is one of the most successful business spheres.
+                                 We always stay in touch with the latest fashion tendencies -
+                                 that is why our goods are so popular..
+                             </p>
+                         </div>
+                         <div class="span4 alignR">
+                             <form class="form-horizontal qtyFrm">
+                                 <h3> $140.00</h3>
+                                 <label class="checkbox">
+                                     <input type="checkbox">  Adds product to compair
+                                 </label><br>
+                                 <div class="btn-group">
+                                     <a href="product_details.html" class="defaultBtn"><span class=" icon-shopping-cart"></span> Add to cart</a>
+                                     <a href="product_details.html" class="shopBtn">VIEW</a>
+                                 </div>
+                             </form>
+                         </div>
+                     </div>
+                     <hr class="soften" />
+                     <div class="row-fluid">
+                         <div class="span2">
+                             <img src="assets/img/d.jpg" alt="">
+                         </div>
+                         <div class="span6">
+                             <h5>Product Name </h5>
+                             <p>
+                                 Nowadays the lingerie industry is one of the most successful business spheres.
+                                 We always stay in touch with the latest fashion tendencies -
+                                 that is why our goods are so popular..
+                             </p>
+                         </div>
+                         <div class="span4 alignR">
+                             <form class="form-horizontal qtyFrm">
+                                 <h3> $140.00</h3>
+                                 <label class="checkbox">
+                                     <input type="checkbox">  Adds product to compair
+                                 </label><br>
+                                 <div class="btn-group">
+                                     <a href="product_details.html" class="defaultBtn"><span class=" icon-shopping-cart"></span> Add to cart</a>
+                                     <a href="product_details.html" class="shopBtn">VIEW</a>
+                                 </div>
+                             </form>
+                         </div>
+                     </div>
+                     <hr class="soften" />
+                     <div class="row-fluid">
+                         <div class="span2">
+                             <img src="assets/img/d.jpg" alt="">
+                         </div>
+                         <div class="span6">
+                             <h5>Product Name </h5>
+                             <p>
+                                 Nowadays the lingerie industry is one of the most successful business spheres.
+                                 We always stay in touch with the latest fashion tendencies -
+                                 that is why our goods are so popular..
+                             </p>
+                         </div>
+                         <div class="span4 alignR">
+                             <form class="form-horizontal qtyFrm">
+                                 <h3> $140.00</h3>
+                                 <label class="checkbox">
+                                     <input type="checkbox">  Adds product to compair
+                                 </label><br>
+                                 <div class="btn-group">
+                                     <a href="product_details.html" class="defaultBtn"><span class=" icon-shopping-cart"></span> Add to cart</a>
+                                     <a href="product_details.html" class="shopBtn">VIEW</a>
+                                 </div>
+                             </form>
+                         </div>
+                     </div>
+                     <hr class="soften" />
+                     <div class="row-fluid">
+                         <div class="span2">
+                             <img src="assets/img/d.jpg" alt="">
+                         </div>
+                         <div class="span6">
+                             <h5>Product Name </h5>
+                             <p>
+                                 Nowadays the lingerie industry is one of the most successful business spheres.
+                                 We always stay in touch with the latest fashion tendencies -
+                                 that is why our goods are so popular..
+                             </p>
+                         </div>
+                         <div class="span4 alignR">
+                             <form class="form-horizontal qtyFrm">
+                                 <h3> $140.00</h3>
+                                 <label class="checkbox">
+                                     <input type="checkbox">  Adds product to compair
+                                 </label><br>
+                                 <div class="btn-group">
+                                     <a href="product_details.html" class="defaultBtn"><span class=" icon-shopping-cart"></span> Add to cart</a>
+                                     <a href="product_details.html" class="shopBtn">VIEW</a>
+                                 </div>
+                             </form>
+                         </div>
+                     </div>
+                     <hr class="soften" />
+
+                 </div>
+             </div>
+
+
+
+
+           </div>
+        </div>
+    <script>
+        function SaveUser() {
+            var username = $("#commentName").val();
+            $.ajax({
+                type: "POST",
+                url: "/Home/supmitComment",
+
+                data: json.stringify({ post_txt: username }),
+                contentType: "Applicatin/json",
+
+                success: function (data) {
+
+                    $("#myTable").append("<tr><td>" +
+
+                    data.post_txt + "<tr><td>" +
+
+                 "</tr><td>");
+
+                },
+                error: function () {
+                    alert("failed added co2mment");
+
+                }
+            });
+        }
+
+    </script>
+
+}
+else { 
+
+        <div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="#">Home</a> <span class="divider">/</span></li>
+        <li><a href="#">@Model.Category.CategoryName</a><span class="divider">/</span></li>
+        <li class="active">@Model.title</li>
+    </ul>
+        <input type="hidden" value="@Model.id" id="prodid"/>
+        <input type="hidden" value="@Session["Userid"]" id="userid" />
+
+              
+         <div class="well well-small">
+        <div class="row-fluid">
+            <div class="span5 ">
+
+                    
+                <div id="myCarousel" class="carousel slide cntr thumbnail">
+                    <div class="carousel-inner">
+                        <div class="preview">
+                            <a href="~/uploads/@Model.Image">
+                                <img src="~/uploads/@Model.Image" title="@Model.title" alt="" style="width:100%">
+                            </a>
+                            <div>
+                                @*<a class="preview" href="~/uploads/@Model.Image"
+                                   title="<h3> Name : @Model.title <br />Price: @Model.price </h3>">
+                                    <span class="icon-edit"></span>
+                                </a>*@
+
+
+                            </div>
+
+
+                            <div class="caption cntr">
+
+                                <div class="Fav">
+                                    @if (ViewBag.like != 0)
+                                    {
+                                        <a href="" title="delete fav">
+                                            <span class="icon-heart" id="dislike"></span>
+                                        </a>
+
+                                    }
+                                    else
+                                    {
+                                        <a href="" title="add to fav">
+                                            <span class="icon-heart-empty" id="hyperaddtofav"></span>
+                                        </a>
+                                    }
+                                </div>
+                                @{Html.RenderAction("numberoflike", "Home");}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="span7">
+                <h3>@Model.title [$@Model.price]</h3>
+                <hr class="soft" />
+
+                <form class="form-horizontal qtyFrm">
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.title):</span></label>
+                        <div class="controls">
+                            @Html.DisplayFor(model => model.title)
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.MyProperty):</span></label>
+                        <div class="controls">
+                            @Html.DisplayFor(model => model.MyProperty)
+                        </div>
+
+
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.price):</span></label>
+                        <div class="controls">
+                            $@Html.DisplayFor(model => model.price)
+                        </div>
+                    </div>
+
+                    @Html.ActionLink("Back to List", "Index")
+                        @*@Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = Model.id }, null)*@
+                        <h3>the quentity of product is finished well come soon</h3>
+                </form>
+
+            </div>
+        </div>
+        <div style="margin-left:20px;margin-top:20px">
+            
+        <input type="text" placeholder="add Comment..." id="commentname"
+            name="commentName" class="search-query span3" />
+
+            <input type="button" value="add" id="addpost" class="btn btn-default" style="border-radius:30px"/>
+
+        
+        </div>
+
+        <br />
+
+
+            
+
+        <div id="load" style="display:none">
+            <img src="~/assets/loadingDNT.gif" />
+        </div>
+            
+            <table class="table" id="ggg" style="width:100%">
+                <tr>
+                    <th>
+                        user
+                    </th>
+                       
+                    <th>
+                        post
+                    </th>
+                    <th>
+                        delete
+                    </th>
+
+                </tr>
+            </table>
+
+
+
+         @*<hr class="softn clr" />*@
+
+
+
+             <input type="text" placeholder="add ..." 
+                    name="commentName" class="search-query span3" />
+              <a onclick='SaveUser()'>save</a>
+
+
+             @*<table class="table" id="myTable" style="width:100%">
+                 <tr>
+                     <th>
+                         user
+                     </th>
+
+                     <th>
+                         post
+                     </th>
+                     <th>
+                         delete
+                     </th>
+
+                 </tr>
+             </table>*@
+
+
+
+
+</div>
+        </div>
+
+
+}
+
+
+
+<script src="~/Scripts/complete/jquery-1.10.2.js"></script>
+
+<script src="~/Scripts/img/test.js"></script>
+@*<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
+
+@*<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/img/custom.js"></script>
+<script src="~/Scripts/img/jquery.mixitup.min.js"></script>
+<script src="~/Scripts/img/jquery.prettyPhoto.js"></script>*@
+

@@ -1,0 +1,142 @@
+﻿@model e_commerce.Models.Product
+
+<link href="~/assets/prettyPhoto.css" rel="stylesheet" />
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="#">Home</a> <span class="divider">/</span></li>
+        <li><a href="#">@Model.Category.CategoryName</a> <span class="divider">/</span></li>
+        <li class="active">@Model.title</li>
+    </ul>
+    <input type="hidden" value="@Model.id" id="prodid" />
+    <div class="well well-small">
+        <div class="row-fluid">
+            <div class="span5 ">
+
+
+                <div id="myCarousel" class="carousel slide cntr thumbnail">
+                    <div class="carousel-inner">
+                        <div class="preview item active">
+                            <a href="~/uploads/@Model.Image">
+                                <img src="~/uploads/@Model.Image" title="@Model.title" alt="" style="width:100%">
+                            </a>
+                            <div>
+                                <a class="preview" href="~/uploads/@Model.Image"
+                                   title="
+                                    <h3> Name : @Model.title <br />Price: @Model.price </h3>">
+                                    <span class="icon-edit"></span>
+                                </a>
+
+
+                            </div>
+
+
+                            <div class="caption cntr">
+
+
+                                @if (ViewBag.like != 0)
+                                {
+                                    <a href="" title="delete fav">
+                                        <span class="icon-heart" id="dislike"></span>
+                                    </a>
+
+                                }
+                                else
+                                {
+                                    <a href="" title="add to fav">
+                                        <span class="icon-heart-empty" id="hyperaddtofav"></span>
+                                    </a>
+                                }
+                                @{Html.RenderAction("numberoflike", "Home");}
+
+
+                            </div>
+
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="span7">
+                <h3>@Model.title [$@Model.price]</h3>
+                <hr class="soft" />
+
+                <foxrm class="form-horizontal qtyFrm">
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.title):</span></label>
+                        <div class="controls">
+                            @Html.DisplayFor(model => model.title)
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.MyProperty):</span></label>
+                        <div class="controls">
+                            @Html.DisplayFor(model => model.MyProperty)
+                        </div>
+
+
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"><span>@Html.DisplayNameFor(model => model.price):</span></label>
+                        <div class="controls">
+                            $@Html.DisplayFor(model => model.price)
+                        </div>
+                    </div>
+
+                    @Html.ActionLink("Back to List", "Index")
+                    <button class="shopBtn">
+                        <span class="icon-shopping-cart"></span>
+                        @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = Model.id }, null)
+                    </button>
+                </foxrm>
+
+            </div>
+        </div>
+        <div style="margin-left:20px;margin-top:20px">
+
+            <input type="text" placeholder="add Comment..." id="commentname"
+                   name="commentName" class="search-query span3" />
+
+            <input type="button" value="add" id="addpost" class="btn btn-default" style="border-radius:30px" />
+
+
+        </div>
+
+        <br />
+
+
+
+        <div id="load" style="display:none">
+            <img src="~/assets/loadingDNT.gif" />
+        </div>
+
+        <table class="table" id="ggg" style="width:100%">
+            <tr>
+                <th>
+                    user
+                </th>
+
+                <th>
+                    post
+                </th>
+
+            </tr>
+        </table>
+
+
+
+        <hr class="softn clr" />
+    </div>
+</div>
+<script src="~/Scripts/complete/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/img/test.js"></script>
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/img/custom.js"></script>
+<script src="~/Scripts/img/jquery.mixitup.min.js"></script>
+<script src="~/Scripts/img/jquery.prettyPhoto.js"></script>

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<e_commerce.Models.Comment>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Product.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.UserType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CommentName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CommentName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CommentID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CommentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CommentID })
+        </td>
+    </tr>
+}
+
+</table>

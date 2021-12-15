@@ -1,0 +1,36 @@
+﻿@model IEnumerable<e_commerce.Models.OrderDetail>
+
+@{
+    ViewBag.Title = "product_buy_user";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>product_buy_user</h2>
+
+<h2> Total => [@Model.Count()]</h2>
+
+
+@foreach (var item in Model) {
+    
+       @Html.DisplayFor(modelItem => item.Order.Username)
+        
+    
+    @foreach (var item in item)
+    {
+        <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Item.title)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitPrice)
+        </td>
+      
+    </tr>
+    }
+     
+}
+

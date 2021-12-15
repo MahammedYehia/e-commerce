@@ -1,0 +1,42 @@
+﻿@model IEnumerable<e_commerce.Models.favourite>
+
+@{
+    ViewBag.Title = "getallfav";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menu{
+}
+                      <h2 style="margin-left:18%">all users like my products</h2>
+
+
+                      <table class="table table-striped table-bordered">
+                          <tr>
+                              <th>
+                                  @Html.DisplayNameFor(model => model.Product.title)
+                              </th>
+                              <th>
+                                  @Html.DisplayNameFor(model => model.User.UserName)
+                              </th>
+                              <th>
+                                  @Html.DisplayNameFor(model => model.data)
+                              </th>
+                          </tr>
+
+                          @foreach (var item in Model)
+                          {
+                              <tr>
+                                  <td>
+                                      @Html.DisplayFor(modelItem => item.Product.title)
+                                  </td>
+                                  <td>
+                                      @Html.DisplayFor(modelItem => item.User.UserName)
+                                  </td>
+                                  <td>
+                                      @Html.DisplayFor(modelItem => item.data)
+                                  </td>
+
+                              </tr>
+                          }
+
+                      </table>
+<br /><br /><br />

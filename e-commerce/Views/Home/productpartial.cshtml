@@ -1,0 +1,35 @@
+﻿@model IEnumerable<e_commerce.Models.Product>
+
+    @foreach (var item in Model.OrderByDescending(x => x.data).Take(3))
+    {
+        <ul class="nav nav-list promowrapper">
+            <li>
+                <div class="thumbnail">
+                
+
+                    @Html.ActionLink("VIEW Details", "Details", new { productid = item.id },
+                                new { @class = "zoomTool" })
+                    <a href="@Url.Action("Details", "Home", new { productid = item.id })">
+                        <img src="~/uploads/@Html.DisplayFor(items => item.Image)" alt="ecommerce">
+                    </a>
+                    <div class="caption">
+                        <h4>
+
+                            @Html.ActionLink("Details", "Details", new { id = item.id },
+                                new { @class = "defaultBtn" })
+                            <span class="pull-right">$@Html.DisplayFor(modelItem => item.price)</span>
+                        </h4>
+                    </div>
+                </div>
+            </li>
+            <li style="border:0"> &nbsp;</li>
+
+        </ul>
+
+
+
+    }
+
+
+
+

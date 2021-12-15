@@ -1,0 +1,238 @@
+﻿@model IEnumerable<e_commerce.Models.Category>
+
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    @section menu{
+    }
+
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#mymodel">
+    Create new category</a>
+    <div class="modal fade" id="mymodel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h3 class="modal-title">create new category</h3>
+                </div>
+                <div class="modal-body">
+
+                    <input type="text" placeholder="Enter category Name ...." id="catidname"
+                           name="CategoryName" class="search-query span3" />
+                    <input type="hidden" value="" id="prodid" />
+
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-danger" data-dismiss="modal">cancel</a>
+                    <input type="reset" value="submit" class="btn btn-success" id="idCategory" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="mymodel1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h3 class="modal-title">details</h3>
+                </div>
+                <div class="modal-body" id="mymodelbodydiv1">
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-danger" data-dismiss="modal">cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="mymodel2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">delete</h3>
+            </div>
+            <div class="modal-body" id="mymodelbodydiv2">
+                are you sure to delete
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-success" onclick="deleteconferm()" data-dismiss="modal">delete</a>
+
+                <a href="#" class="btn btn-danger" data-dismiss="modal">cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <br />
+    <table class="table table-bordered table-hover table-responsive" id="rowtest">
+        <tr>
+            @*<th>
+                @Model.Count()
+                @Html.DisplayNameFor(model => model.CategoryName)
+              
+            </th>*@
+           <th>category</th>
+            <th>edit</th>
+            <th>details</th>
+            <th>delete</th>
+
+        </tr>
+
+        @foreach (var item in Model)
+            {
+
+                <tr id="show_@item.id">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+
+                        <td>
+                            @Html.ActionLink(" Edit ", "Edit", new { id = item.id }, new { @class = "btn btn-default" })
+                        </td>
+
+                    <td>
+                        <a href="#" class="btn btn-default" onclick="showcategory(@item.id)">
+                            details
+                        </a>
+
+                        </td>
+                    <td>
+                        @using (Html.BeginForm("Delete", "Category", new { id = item.id }, FormMethod.Post,
+                        new { onsubmit = "return confirm('are you delete this')" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Delete" />
+
+                        }
+                    </td>
+    </tr>
+            }
+
+    </table>
+
+    <script src="~/Scripts/complete/jquery-1.10.2.js"></script>
+    <script>
+        $(document).ready(function () {
+           
+
+            $("#idCategory").click(function () {
+                //debugger
+                var CategoryName = $("#catidname").val();
+                $.ajax({
+
+                    url: "/Category/Create",
+                    type: "POST",
+                    datatype: "json",
+                    data: {
+                        CategoryName: CategoryName,
+                    },
+                    success: function (response) {
+                        $("#mymodel").modal("hide");
+                        var url="/Category/Index";
+
+                        $("Body").load(url);
+                       // $("#show_" + Session["id"]).show();
+                        //processCommentField();
+                    }
+
+                });
+            });
+
+            //function processCommentField() {
+            //    $.ajax({
+            //        url: "/Category/Index",
+            //        type: "GET",
+            //        datatype: "json",
+            //        success: function (data) {
+            //            var print =
+            //                "<tr id='ggg'>" +
+            //                    "<th>" + "user" + "</th>" +
+            //                    "<th>" + "post" + "</th>" +
+            //                    "<th>" + "delete" + "</th>" +"</tr>";
+
+            //            $.each(data, function (i, cat) {
+
+                          
+            //                print += "<tr id='deleterecord'>" + "<td><span style='margin:5px'>" + cat.CategoryName + "</span></td>"
+                                
+            //       "<td><input type='button' value='delete' onclick='Deletecomment(" + postId + ")'/></td>" +
+            //            + "</tr>";
+            //            });           
+
+            //            document.getElementById('ggg').innerHTML = print;
+            //            $("#ggg").css("display", "inline-table");
+            //        },
+            //        error: function () {
+            //            alert("error");
+            //        }
+            //    });
+
+               
+            //}
+            //$.ajax({
+            //    url: "/Category/showallcategory",
+            //    type: "GET",
+            //    datatype: "json",
+            //    success: function (data) {
+            //        $.each(data, function (i, cat) {
+            //            $("#rowtest").append("<tr>" +
+            //                   "<td>" + cat.CategoryName + "</td>" +
+            //                 "<td><a href='/Category/Edit/"+cat.id+"'/>Edit</a></td>" +
+            //                   "<td><button id=" + cat.id + " onclick='showcategory(id)'>details</button></td>" +
+            //                   "<td><button id=" + cat.id + " onclick='getid(id)>delete</button></td>" +
+            //                      "<tr>");
+
+
+            //        });
+
+            //      },
+            //    error: function () {
+            //        alert("error");
+            //    }
+            //});
+
+            
+        });
+        var showcategory=function(id){
+            var url="/Category/Details?id="+id;
+            $("#mymodelbodydiv1").load(url,function(){
+                $("#mymodel1").modal("show");
+            })
+        }
+        //var getid = function (id) {
+        //    $("#hiddenid").val(id);
+        //        $("#mymodel2").modal("show");
+            
+        //}
+
+        //var deleteconferm = function () {
+        //    var id = $("#hiddenid").val();
+
+        //        $.ajax({
+
+        //            url: "/Category/Delete/" + id,
+        //            type: "GET",
+        //            datatype: "json",
+        //            data: { id: id },
+
+        //            success: function (response) {
+        //                $("#mymodel2").modal("hide");
+
+
+        //            }
+
+
+        //    });
+
+        //}
+    </script>
+
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    

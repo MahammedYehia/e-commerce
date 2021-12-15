@@ -1,0 +1,84 @@
+﻿@model IEnumerable<e_commerce.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menu{}
+<div class="span9">
+
+    <ul class="breadcrumb">
+        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+        <li><a href="products.html">Items</a> <span class="divider">/</span></li>
+        <li class="active">Preview</li>
+    </ul>
+</div>
+@foreach (var item in Model)
+{
+
+    <div class="span9">
+
+        <div class="well well-small">
+            <div class="row-fluid">
+                <div class="span5">
+                    <div id="myCarousel" class="carousel slide cntr">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <a href="#"> <img src="~/uploads/@item.Image" alt="" id="changeimage" style="width:100%;border-radius:1000px"></a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="span7">
+                    @*<h3>Admin Number @Model.Count()</h3>*@
+                    <hr class="soft" />
+
+                    <form class="form-horizontal qtyFrm">
+                        <div class="control-group">
+                            <label class="control-label"><span>UserName</span></label>
+                            <div class="controls">
+
+                                @item.UserName
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label"><span>UserType</span></label>
+                            <div class="controls">
+                                @item.UserType
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><span>gender</span></label>
+                            <div class="controls">
+                                @item.gender
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><span>Email</span></label>
+                            <div class="controls">
+                                @item.Email
+                            </div>
+                        </div>
+                        @*<button type="submit" class="shopBtn"><span class="icon-remove"></span> delete user</button>*@
+                        @Html.ActionLink("Edits", "Edit", new { Id = item.Id, }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Detail", "Details", new { Id = item.Id }, new { @class = "btn btn-default" })
+                        @using (Html.BeginForm("Delete", "User", new { Id = item.Id, @class = "btn btn-default" },
+                     FormMethod.Post, new { onsubmit = "return confirm ('are you delete this')" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Delete" id="sidebar" />
+                        }
+                    </form>
+                </div>
+            </div>
+            <hr class="softn clr" />
+
+
+
+        </div>
+    </div>
+
+}

@@ -1,0 +1,176 @@
+﻿@model e_commerce.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+@section menu
+{
+
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li>
+            <a href="index.html">Home</a>
+            <span class="divider">/</span>
+        </li>
+        <li class="active">Registration</li>
+    </ul>
+    <h3> Registration</h3>
+
+    <hr class="soft" />
+    <div class="well">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+
+    <div class="form-horizontal">
+
+        <div class="alert alert-danger" id="error-div" style="display:none">
+            <span id="view-error">
+
+            </span>
+
+        </div>
+    </div>
+</div>
+            <h3>Your Personal Details</h3>
+        @Html.ValidationSummary(true)
+            
+            <div class="control-group">
+
+                @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                <div class="controls">
+                    @Html.EditorFor(m => m.UserName, new { @class = "form-control", @placeholder = "UserName" })
+                    @Html.ValidationMessageFor(model => model.UserName)
+
+
+                </div>
+            </div>
+
+
+
+
+
+            <div class="control-group">
+                @Html.LabelFor(m => m.UserType, new { @class = "col-md-2 control-label" })
+                <div class="controls">
+                    @Html.DropDownList("UserType", null,"--select--", new { @class = "form-control input-lg" })
+                    @*@Html.DropDownList("UserType", "--select--")*@
+
+
+                    @Html.ValidationMessageFor(model => model.UserType)
+
+
+                </div>
+            </div>
+
+
+
+            <div class="control-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                <div class="controls">
+                    @Html.EditorFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+                    @Html.ValidationMessageFor(model => model.Email)
+
+
+                </div>
+            </div>
+
+    <div class="control-group">
+        @Html.LabelFor(model => model.Image, new { @class = "col-md-2 control-label" })
+        <div class="controls">
+            <input name="upload" type="file" id="Imageid" class="form-control" />
+        </div>
+    </div>
+
+                <div class="control-group">
+                <label class="control-label"> gender <sup>*</sup></label>
+                <div class="controls">
+                    @Html.DropDownList("gender", null, "--select--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.gender)
+
+
+                </div>
+            </div>
+
+
+
+            <div class="control-group">
+                <label class="control-label">Password <sup>*</sup></label>
+                <div class="controls">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                    @Html.ValidationMessageFor(model => model.Password)
+
+
+
+
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"> confirm Password <sup>*</sup></label>
+                <div class="controls">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "ConformPassword" })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword)
+
+
+                </div>
+            </div>
+            
+           
+            <div class="control-group">
+                <div class="controls">
+                    <input type="submit" name="submitAccount" value="Register" class="exclusive shopBtn" id="save">
+
+                </div>
+            </div>
+        }
+
+    </div>
+
+
+</div>
+
+@section scripts
+    {
+    <script>
+
+        $(function () {
+            $("#save").click(function () {
+                //check if the input is empty
+                if ($("#Imageid").val() == "") {
+                    $("#error-div").fadeIn();
+                    $("#view-error").append("please select Image from galary");
+                    return false;
+                }
+                if ($("#Imageid").val() != "") {
+                    //check if the image extention is valid
+                    var filename = document.getElementById("Imageid").value;
+                    var extention = filename.substr(filename.lastIndexOf('.') + 1);
+                    var validextention = ['bmp', 'gif', 'png', 'jpg', 'PNG'];
+                    if ($.inArray(extention, validextention) == -1) {
+                        $("#error-div").fadeIn();
+                        $("#view-error").append("please select Image by valid extention");
+                        return false;
+                    }
+
+                    //check if the image size is valid
+
+                    var filesize = document.getElementById("Imageid").files[0].size / 1024 / 1024;
+                    if (filesize > 2) {
+                        $("#error-div").fadeIn();
+
+                        $("#view-error").append("please select Image size >2");
+                        return false;
+                    }
+                }
+
+            });
+
+        });
+
+    </script>
+}
+

@@ -1,0 +1,68 @@
+﻿@model e_commerce.Models.CartModels
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    
+    
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+    
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.userId)
+        @Html.HiddenFor(model => model.productId)
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.message, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.message)
+                @Html.ValidationMessageFor(model => model.message)
+            </div>
+        </div>
+
+
+        
+
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.applydata, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Model.applydata
+            </div>
+        </div>
+
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.productId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Model.product.title
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.userId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Model.User.UserName
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

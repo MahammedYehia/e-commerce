@@ -1,0 +1,50 @@
+﻿
+
+@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm",@class= "medo loginFrm" }))
+    { 
+        
+       @Html.AntiForgeryToken()
+
+        <ul class="nav pull-right" style="margin-right: -20px;margin-left: -20px;">
+            
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="icon-lock"></span> @Resources.Content.welcome. <b class="caret"></b></a>
+
+                <div class="dropdown-menu">
+                    <form class="form-horizontal loginFrm">
+                      <div class="control-group">
+                        <button type="submit" class="shopBtn btn-block">
+                            @Html.ActionLink(User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                         </button>
+                     <button type="submit" class="shopBtn btn-block">
+                         <a href="javascript:document.getElementById('logoutForm').submit()">@Resources.Content.Logoff </a>
+                      </button>
+                        </div>
+            </form>
+            </div>
+            </li>
+        </ul>
+    }
+
+}
+
+else
+{
+    <ul class="nav pull-right">
+        <li class="dropdown">
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+               <span class="icon-lock"></span>
+
+        <li>@Html.ActionLink(Resources.Content.login, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        
+        </a>
+
+       </li>
+    </ul>
+
+
+}

@@ -1,0 +1,39 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<e_commerce.Models.Product>
+
+<div class="well well-small">
+<div class="row-fluid">
+<ul class="thumbnails">
+
+@foreach (var item in Model)
+{
+<li class="span4">
+    <div class="thumbnail">
+       <a href="#" class="overlay"></a>
+        @Html.ActionLink("VIEW Details", "Details", new { productid = item.id },
+                new { @class = "zoomTool" })
+                <a href="#"><img src="~/uploads/@item.Image" alt=""></a>
+                <div class="caption cntr">
+                <p> @Html.DisplayFor(nn => item.title) & @Html.DisplayFor(nn => item.MyProperty)  </p>
+                <div class="actionList">
+                 <a class="pull-left" href="#">Add to Wish List </a>
+                 <a class="pull-left" href="#">Add to Wish  </a>
+            </div>
+            <br class="clr">
+        </div>
+    </div>
+
+</li>  
+       }
+</ul>
+</div>
+
+</div>
+
+<div class="pagination" style="margin-left:200px">
+<ul>
+@Html.PagedListPager(Model, page => Url.Action("catsearch", new { page }))
+</ul>
+
+</div>

@@ -1,0 +1,18 @@
+﻿@model IEnumerable<e_commerce.Models.Comment>
+
+
+  
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+    @Html.DisplayFor(modelItem => item.date)
+</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CommentName)
+        </td>
+        
+     
+    </tr>
+}
+

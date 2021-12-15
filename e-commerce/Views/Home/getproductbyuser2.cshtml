@@ -1,0 +1,58 @@
+﻿@model IEnumerable<e_commerce.Models.OrderDetail>
+
+@{
+    ViewBag.Title = "getproductbyuser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var x = 1;
+}
+
+<h2>getproductbyuser2</h2>
+
+
+<table class="table table-bordered" style="width: 100%; border-radius: 30px;  background: url(../assets/img/bootstrap_free-ecommerce.png) repeat 0 0">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Item.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </th>
+
+    </tr>
+
+@foreach (var item in Model)
+{
+    
+    <tr style="background-color: cyan;">
+        <td>
+            @x
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitPrice)
+        </td>
+        @{
+              x++;
+        }
+    </tr>
+
+}   
+   
+</table>

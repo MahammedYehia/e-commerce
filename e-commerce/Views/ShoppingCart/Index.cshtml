@@ -1,0 +1,286 @@
+﻿@model e_commerce.ViewModels.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+@section menu
+{
+
+}
+<script src="~/Scripts/jquery-3.0.0.min.js"
+        type="text/javascript"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".RemoveLink").click(function () {
+            // Get the id from the link
+            var recordToDelete = $(this).attr("data-id");
+            if (recordToDelete != '') {
+                // Perform the ajax post
+                $.post("/ShoppingCart/RemoveFromCart", { "id": recordToDelete },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.ItemCount == 0) {
+                            $('#row-' + data.DeleteId).fadeOut('slow');
+                        } else {
+                            $('#item-count-' + data.DeleteId).text(data.ItemCount);
+                        }
+                        $('#cart-total').text(data.CartTotal);
+                        $('#update-message').text(data.Message);
+                        $('#cart-status').text('Cart (' + data.CartCount + ')');
+                    });
+            }
+        });
+    });
+</script>
+
+
+<div class="row">
+    <div class="span12">
+        <ul class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index","Home")">Home</a>
+                <span class="divider">/</span>
+            </li>
+            <li class="active">Check Out</li>
+        </ul>
+        <div class="well well-small">
+            <h1>Check Out <small class="pull-right"> Items are in the cart </small></h1>
+            <hr class="soften" />
+
+            <table class="table table-bordered table-condensed" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Description</th>
+                        <th>	Ref. </th>
+                        <th>Avail.</th>
+                        <th>Total</th>
+                        <th>Quentity </th>
+                        <th>remove</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var item in Model.CartItems)
+                    {
+
+                        <tr id="row-@item.RecordId">
+                            <td>
+                                <img width="100" src="~/uploads/@Html.DisplayFor(modelItem => item.Item.Image)" alt="">
+                            </td>
+
+                            <td>
+                               Title : @Html.ActionLink(item.Item.title, "Details", "Product", new { id = item.ItemId }, null)
+                                <br>
+                                discripe :@item.Item.MyProperty
+                                <br>
+                                category : @item.Item.Category.CategoryName
+                            </td>
+
+                            <td> - </td>
+                            <td>
+                                <span class="shopBtn"><span class="icon-ok"></span></span>
+                            </td>
+
+                            <td>$ @item.Item.price</td>
+                            @*<td>
+                                    <input class="span1" style="max-width:34px" placeholder="1" size="16" type="text">
+                                    <div class="input-append">
+                                        <button class="btn btn-mini" type="button">-</button><button class="btn btn-mini" type="button">+</button><button class="btn btn-mini btn-danger" type="button"><span class="icon-remove"></span></button>
+                                    </div>
+                                </td>*@
+
+                            <td id="item-count-@item.RecordId">
+                                @item.Count
+                            </td>
+
+                            @*<td>  $ @item.Item.price</td>*@
+                            <td>
+                                <button class="btn btn-mini btn-warning" type="button" style="margin:20px">
+
+                                    <a href="#" class="RemoveLink"
+                                       data-id="@item.RecordId">
+                                        Remove
+                                    </a>
+                                </button>
+
+                            </td>
+
+
+                        </tr>
+
+                    }
+
+                    <tr>
+                        <td colspan="6" class="alignR">Total products:	</td>
+                        <td class="label label-primary" id="cart-total"> $ @Model.CartTotal</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+
+            <a href="@Url.Action("Index","Home")" class="shopBtn btn-large"><span class="icon-arrow-left"></span> Continue Shopping </a>
+            <a href="@Url.Action("AddressAndPayment", "Checkout")" class="shopBtn btn-large pull-right">Checkout <span class="icon-arrow-right"></span></a>
+
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+@*<ul class="breadcrumb">
+        <li>
+            <a href="index.html">Home</a>
+            <span class="divider">/</span>
+        </li>
+    </ul>
+
+
+    <h1>
+
+        <small class="pull-right">
+
+        </small>
+    </h1>
+
+    <hr class="soften" />
+
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th>Image </th>
+                <th>title </th>
+                <th>Count</th>
+                <th>discription </th>
+                <th>remove </th>
+
+                <th>Total price</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+           @foreach (var item in Model.CartItems)
+           {
+               <tr id="row-@item.RecordId">
+               <td>
+                 <img width="100" src="~/uploads/@Html.DisplayFor(modelItem => item.Item.Image)" alt="">
+                </td>
+                <td>
+                    @Html.ActionLink(item.Item.title,"Details", "Home", new { id = item.ItemId }, null)
+                </td>
+
+
+
+                <td id="item-count-@item.RecordId">
+                    @item.Count
+                </td>
+
+                <td>
+                     @item.Item.MyProperty
+                </td>
+
+                <td>
+                    <button class="btn btn-mini btn-warning" type="button">
+
+                            <a href="#" class="RemoveLink"
+                               data-id="@item.RecordId">
+                                Remove from cart
+                            </a>
+                         </button>
+
+                </td>
+                <td>
+                    $ @item.Item.price
+                </td>
+            </tr>
+            }
+
+
+            <tr>
+                <td colspan="6" class="alignR">Total price:	</td>
+                <td class="label label-primary" id="cart-total">
+                    @Model.CartTotal
+                </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+    <br />
+
+
+
+    <a href="@Url.Action("Index","Home")" class="shopBtn btn-large">
+        <span class="icon-arrow-left"></span> Continue Shopping
+    </a>
+    <a href="@Url.Action("AddressAndPayment", "Checkout")" class="shopBtn btn-large pull-right">
+        check out
+        <span class="icon-arrow-right"></span>
+    </a>*@
+
+
+
+
+
+
+@*<h3>
+        <em>Review</em> your cart:
+    </h3>
+    <p class="button">
+        @Html.ActionLink("Checkout>> ", "AddressAndPayment", "Checkout")
+    </p>
+    <div id="update-message">
+    </div>
+    <table>
+        <tr>
+            <th>
+                Item Name
+            </th>
+            <th>
+                Price (each)
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.CartItems)
+        {
+            <tr id="row-@item.RecordId">
+                <td>
+                    @Html.ActionLink(item.Item.title,
+    "Details", "Store", new { id = item.ItemId }, null)
+                </td>
+                <td>
+                    @item.Item.price
+                </td>
+                <td id="item-count-@item.RecordId">
+                    @item.Count
+                </td>
+                <td>
+                    <a href="#" class="RemoveLink"
+                       data-id="@item.RecordId">
+                        Remove
+                        from cart
+                    </a>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                Total
+            </td>
+            <td></td>
+            <td></td>
+            <td id="cart-total">
+                @Model.CartTotal
+            </td>
+        </tr>
+    </table>*@

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<e_commerce.Models.OrderDetail>
+
+@{
+    ViewBag.Title = "getproductbyuser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menu{
+}
+<h2>getproductbyuser</h2>
+
+<table class="table table-bordered table-responsive">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Item.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+   
+     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.Username)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitPrice)
+        </td>
+     
+    </tr>
+}
+
+</table>
+
+
+@*@{Html.RenderAction("Best_selling", "Admin");}*@
+
+
+<br /><br /><br />

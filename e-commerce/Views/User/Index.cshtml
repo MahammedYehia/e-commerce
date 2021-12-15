@@ -1,0 +1,207 @@
+﻿@model IEnumerable<e_commerce.Models.ApplicationUser>
+
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+         
+    }
+    @section menu{}
+    <div class="span9">
+
+        <ul class="breadcrumb">
+            <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+            <li><a href="products.html">Items</a> <span class="divider">/</span></li>
+            <li class="active">Preview</li>
+        </ul>
+    </div>
+    @foreach (var item in Model)
+    {
+
+        <div class="span9">
+
+            <div class="well well-small">
+                <div class="row-fluid">
+                    <div class="span5">
+                        <div id="myCarousel" class="carousel slide cntr">
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <a href="#"> <img src="~/uploads/@item.Image" alt="" id="changeimage" style="width:100%;border-radius:1000px"></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="span7">
+                        
+                        <hr class="soft" />
+
+                        <form class="form-horizontal qtyFrm">
+                            <div class="control-group">
+                                <label class="control-label"><span>UserName</span></label>
+                                <div class="controls">
+
+                                    @item.UserName
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label"><span>UserType</span></label>
+                                <div class="controls">
+                                    @item.UserType
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label"><span>gender</span></label>
+                                <div class="controls">
+                                    @item.gender
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label"><span>Email</span></label>
+                                <div class="controls">
+                                    @item.Email
+                                </div>
+                            </div>
+                            @*<button type="submit" class="shopBtn"><span class="icon-remove"></span> delete user</button>*@
+                            @Html.ActionLink("Edits", "Edit", new { Id = item.Id, }, new { @class = "btn btn-default" })
+                            @Html.ActionLink("Detail", "Details", new { Id = item.Id }, new { @class = "btn btn-default" })
+                          
+                            
+                        @if (item.Isblocked == 0)
+                        {
+                            @Html.ActionLink("MakeBlock", "MakeBlock", new { Id = item.Id }, new { @class = "btn btn-default" })
+                        }else
+                        {
+
+                            @Html.ActionLink("DeleteBlock", "DeleteBlock", new { Id = item.Id }, new { @class = "btn btn-default" })
+                        }
+
+                        </form>
+                        @*@if (item.Isblocked == 0)
+                        {
+                            <button type="button" onclick="CustomerModalBlock(@item.Id,'@item.UserName')" class="btn btn-primary glyphicon glyphicon-edit">Block</button>
+                        }
+                        else
+                        {
+
+                            <button type="button" onclick="CustomerModalUnblock(@item.Id,'@item.UserName')" class="btn btn-primary glyphicon glyphicon-edit">Unblock</button>
+                        }*@
+
+
+                        @using (Html.BeginForm("Delete", "User", new { Id = item.Id, @class = "btn btn-default" },
+                             FormMethod.Post, new { onsubmit = "return confirm ('are you delete this')" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Delete" id="sidebar" />
+
+                        }
+
+                    </div>
+                </div>
+                <hr class="softn clr" />
+
+
+
+            </div>
+        </div>
+    }
+                     
+
+    @*<input type="hidden" id="hidden_user_id">
+
+    <div id="block_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+             Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="modify_title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="modify_body">
+                    </div>
+
+
+                    <div id="block_customer" hidden>
+                        <input type="number" id="block_duration">&nbsp;&nbsp; day
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dissmiss="modal" id="close">cancel</button>
+
+                    <span id="block_button" hidden>
+                        <button type="button" class="btn btn-success" onclick="block_customer(1)">Block</button>
+                    </span>
+                    <span id="unblock_button" hidden>
+                        <button type="button" class="btn btn-success" onclick="block_customer(0)">UnBlock</button>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>*@
+
+
+    @*<script src="~/Scripts/complete/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+  <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script>
+        //$("#close").click(function () { $(this).parent().parent().parent().parent().modal('hide'); })
+
+        function CustomerModalBlock(customer_id, customer_name) {
+            $("#hidden_user_id").val(customer_id);
+
+            $("#modify_title").text("Block Customer");
+            $("#modify_body").text(customer_name + " will be blocked for :");
+            $("#block_customer").show();
+
+            $("#block_modal").modal('show');
+            $("#block_button").show();
+
+            $("#unblock_button").hide();
+            $("#unblockblock_customer").hide();
+        }
+        /****************************************************************************/
+        function CustomerModalUnblock(customer_id, customer_name) {
+            $("#hidden_user_id").val(customer_id);
+
+            $("#modify_title").text("UnBlock Customer");
+            $("#modify_body").text(customer_name + " still blocked ");
+            $("#unblockblock_customer").show();
+            $("#block_customer").hide();
+            $("#delete_super_edit_modal").modal('show');
+            $("#unblock_button").show();
+
+            $("#block_button").hide();
+        }
+
+
+        /*************************************************************************************/
+
+        var block_customer = function (block) {
+            var userId = $("#hidden_user_id").val();
+            var BlockDuration = 0;
+            if (block != 0) {
+                BlockDuration = $("#block_duration").val();
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/User/BlockCustomer?user_id=" + userId + "&BlockDuration=" + BlockDuration,
+
+                success: function (response) {
+                    $("#block_modal").modal('hide');
+                    window.location.href = "/User/Index";
+
+                }
+
+            })
+        }
+
+        /****************************************************************************/
+
+
+    </script>*@
+  

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<e_commerce.Models.cart>
+
+@{
+    ViewBag.Title = "GetProductByPublisher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br /><br /><br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.product.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.applydata)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.message)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.product.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.applydata)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.message)
+        </td>
+    
+    </tr>
+}
+
+</table>
